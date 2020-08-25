@@ -1,9 +1,9 @@
 from scapy.all import *
 
 def pkt_callback(pkt):
-    if pkt[ICMP].type==8:
+#    if pkt.haslayer('NTP'):
         print("[+] Received Message: "+str(pkt[Raw].load))
 
 print("[+] Started Listener")
 
-sniff(iface="wlan0",prn=pkt_callback,filter='icmp',store=0)
+sniff(iface="ens4",prn=pkt_callback,filter='host 10.128.15.234',store=0)

@@ -1,7 +1,7 @@
 from scapy.all import *
 
 def pkt_callback(pkt):
-#    if pkt.haslayer('NTP'):
+    if pkt.haslayer("TCP"):
         print("[+] Received Message: "+str(pkt[Raw].load))
 
 print("[+] Started Listener")

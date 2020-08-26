@@ -30,9 +30,14 @@ def main():
 				sent = True
 			else:
 				pkt = IP(dst=dest)/TCP()
+				sent(pkt)
 				print("[+] Sent junk packet")
 		sent = False
 		
+	to_send = ""
+	to_send.append(char(171))
+	to_send.append(char(171))
+	send_packet(to_send) #Sent packet indacating transmission has completed
 	print("[+] Done sending message")
 		
 main()

@@ -23,19 +23,15 @@ def main():
 		while(!sent):
 			flag = random.randrange(1,4)
 			if flag == 4:
+				to_send.insert(0,chr(171))
+				to_send.insert(0,chr(172))
 				send_packet(to_send)
 				print("[+] Sent packet containing portion of message")
 				sent = True
 			else:
 				pkt = IP(dst=dest)/TCP()
 				print("[+] Sent junk packet")
-				send(pkt)
 		sent = False
-
-	seg = []
-	for seg in msg_segs:
-		to_send.insert(0,chr(171))
-		to_send.insert(0,chr(172))
 		
 main()
 

@@ -3,12 +3,12 @@ from scapy.all import *
 
 conf.iface="wlan0"
 
-dst = sys.argv[0]
-print(dst)
+dest = sys.argv[0]
+print(dest)
 msg = "adastra per explotium"
 
 def send_packet(seg):
-	pkt = IP(dst=dst)/TCP()/Raw(load=seg)
+	pkt = IP(dst=dest)/TCP()/Raw(load=seg)
 	send(pkt)
 
 def main():
@@ -27,7 +27,9 @@ def main():
 				print("[+] Sent packet containing portion of message")
 				sent = True
 			else:
-				
+				pkt = IP(dst=dest)/TCP()
+				print("[+] Sent junk packet")
+		sent = False
 
 	seg = []
 	for seg in msg_segs:

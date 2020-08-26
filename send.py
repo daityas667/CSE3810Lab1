@@ -33,5 +33,7 @@ def main():
 				print("[+] Sent junk packet")
 		sent = False
 		
+	print("[+] Done sending message")
+		
 main()
 

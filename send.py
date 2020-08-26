@@ -29,6 +29,7 @@ def main():
 			else:
 				pkt = IP(dst=dest)/TCP()
 				print("[+] Sent junk packet")
+				send(pkt)
 		sent = False
 
 	seg = []

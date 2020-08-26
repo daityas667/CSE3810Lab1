@@ -9,6 +9,10 @@ def pkt_callback(pkt):
 			if msg[0] == chr(171) and msg[1] == chr(172): #Rec'd packet contains data from covert message
 				print("[+] Received portion of covert message")
 				final_msg.append(msg[3])
+			elif msg[0] == chr(171) and msg[1] == chr(171):
+				stdout.write("[+] Final message is :")
+				print(final_msg)
+				exit
 			else:
 				print("[+] Received junk packet from sender")
 				

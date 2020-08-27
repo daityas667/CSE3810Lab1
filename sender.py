@@ -1,26 +1,38 @@
 import random
 from scapy.all import *
+conf.iface="ens4"
 
-conf.iface="wlan0"
+src = "10.128.15.244" #internal ip "35.239.112.246"
+dest = "35.239.112.246" #external ip "10.128.15.244"
 
-dst = "192.168.1.100"
 msg = "adastra per explotium"
+def send_packet(seg):
+        pkt = IP(src=src,  dst=dest)/TCP()/Raw(load=seg)
+        send(pkt)
 
-random.seed()
-msg_segs = []
-seg = []
+def main():
+        random.seed()
 
-for char in msg:
-    seg.append(char)
-    flag = random.randint(1, 3)
-    if flag == 3:
-        msg_segs.append(seg)
-        seg = []
+        needed = len(msg)
+        num_sent = 0
+        sent = False
 
-seg = []
-for seg in msg_segs:
-    seg.insert(0,chr(171))
-    seg.insert(0,chr(172))
+        while(num_sent < needed - 1):
+                to_send = msg[num_sent]
+                while(sent == False):
+                        flag = random.randint(1,4)
+                        if flag == 4:
+                                to_send = chr(171) + to_send
+                                send_packet(to_send)
+                                print("[+] Sent packet containing portion of message")
+                                sent = True
+                                num_sent += 1
+                        else:
+                                pkt = IP(dst=dest)/TCP()
+                                send(pkt)
+                                print("[+] Sent junk packet")
+                                sent = False
+                sent = False
+        print("[+] Done sending message")
 
-pkt = IP(dst=dst)/ICMP()/Raw(load=msg)
-send(pkt)
+main()

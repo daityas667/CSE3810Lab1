@@ -2,8 +2,8 @@ import random
 from scapy.all import *
 conf.iface="ens4"
 
-src = "10.128.15.244" #internal ip "35.239.112.246"
-dest = "35.239.112.246" #external ip "10.128.15.244"
+src = "10.128.15.244" #internal ip
+dest = "35.239.112.246" #external ip
 
 msg = "adastra per explotium"
 def send_packet(seg):
@@ -17,7 +17,7 @@ def main():
         num_sent = 0
         sent = False
 
-        while(num_sent < needed - 1):
+        while(num_sent < needed):
                 to_send = msg[num_sent]
                 while(sent == False):
                         flag = random.randint(1,4)

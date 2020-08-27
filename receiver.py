@@ -1,7 +1,7 @@
 from scapy.all import *
 
 def pkt_callback(pkt):
-    if pkt.haslayer("TCP") && pkt.haslayer("Raw"):
+    if pkt.haslayer("TCP") and pkt.haslayer("Raw"):
         print("[+] Received Message: "+str(pkt[Raw].load))
 
 print("[+] Started Listener")

@@ -4,7 +4,7 @@ def pkt_callback(pkt):
     if pkt.haslayer("TCP") and pkt.haslayer("Raw"):
         msg = str(pkt[Raw].load)
         if msg[0] == chr(171) or msg[1] == chr(171):
-            print(+str(pkt[Raw].load))
+            print(str(pkt[Raw].load))
 
 print("[+] Started Listener")
 

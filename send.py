@@ -1,19 +1,44 @@
+import random
 from scapy.all import *
 
-final_msg = []
+conf.iface="ens4"
 
-def pkt_callback(pkt):
-        if pkt.haslayer("TCP"):
-                if pkt.haslayer("Raw"):
-                        msg = str(pkt[Raw].load)
-                        if msg[0] == chr(171) and msg[1] == chr(172):
-                                print("[+] Received portion of covert message")
-                                final_msg.append(msg[3])
-                        elif msg[0] == chr(171) and msg[1] == chr(171):
-                                stdout.write("[+] Final message is :")
-                                print(final_msg)
-                                exit
+dest = str(sys.argv[1])
+print(dest)
 
-print("[+] Started Listener")
+msg = "adastra per explotium"
 
-sniff(iface="ens4",prn=pkt_callback,filter='host 10.128.15.245',store=0)
+def send_packet(seg):
+        pkt = IP(dst=dest)/TCP()/Raw(load=seg)
+        send(pkt)
+
+def main():
+        random.seed()
+
+        needed = len(msg)
+        num_sent = 0
+        sent = False
+
+        while(num_sent < needed):
+                to_send = msg[sent]
+                while(sent == False):
+                        flag = random.randint(1,4)
+                        if flag == 4:
+                                to_send = to_send + chr(171)
+                                to_send = to_send + chr(172)
+                                send_packet(to_send)
+                                print("[+] Sent packet containing portion of message")
+                                sent = True
+                        else:
+                                pkt = IP(dst=dest)/TCP()
+                                send(pkt)
+                                print("[+] Sent junk packet")
+                                sent = False
+
+        to_send = ""
+        to_send.append(char(171))
+        to_send.append(char(171))
+        send_packet(to_send) #Sent packet indacating transmission has completed
+        print("[+] Done sending message")
+
+main()
